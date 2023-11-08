@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link rel="shortcut icon" type="image/png" href="{% static "img/fav.png" %}"
+    /> <link rel="stylesheet" href="{% static "css/signToText.css" %}" />
+
+    <script defer src="{% static 'js/translator.js' %}"></script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.7.0.min.js"
+      integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+      crossorigin="anonymous"
+    ></script>
+
+    <title>|&nbsp; WLSLT - Word-level Deep Sign Language Recognition</title>
+  </head>
+  <body>
+    <header class="header">{% include "navbar.html" %}</header>
+    <section class="translator-container">
+      <div class="translator">
+        <div class="top">
+          <div id="video-container">
+            <!-- Videos will be dynamically added here -->
+          </div>
+        </div>
+        <div class="bottom">
+          <form class="chat-form" id="search-form" method="POST">
+            {% csrf_token %}
+            <input
+              type="text"
+              class="chat-input"
+              id="sentence-input"
+              placeholder="Type your text..."
+            />
+            <button type="submit" class="chat-button" id="search-button">
+              <span class="material-symbols-outlined">send</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      $(document).ready(function () {
+        var videoPlayer = document.createElement("video");
+        var currentVideoIndex = 0;
+        var videos = [];
+
+        $("#search-form").on("submit", function (event) {
+          event.preventDefault();
+
+          var sentence = $("#sentence-input").val();
+
+          $.ajax({
+            url: "{% url 'text-to-sign' %}",
+            type: "POST",
+            data: {
+              sentence: sentence,
+              csrfmiddlewaretoken: "{{ csrf_token }}",
+            },
+            success: function (response) {
+              videos = response.videos;
+              currentVideoIndex = 0;
+              playNextVideo();
+              clearTextarea();
+            },
+          });
+        });
+
+        function playNextVideo() {
+          var videoContainer = $("#video-container");
+          videoContainer.fadeOut(200, function () {
+            videoContainer.empty();
+
+            if (videos.length > 0) {
+              var video = videos[currentVideoIndex];
+              var videoElement =
+                '<div class="video-item">' +
+                '<video id="current-video" autoplay muted class="video_cam_2">' +
+                '<source src="' +
+                video.video_file +
+                '" type="video/mp4">' +
+                "</video>" +
+                "</div>";
+              videoContainer.append(videoElement);
+
+              var currentVideo = document.getElementById("current-video");
+              currentVideo.onended = function () {
+                currentVideoIndex++;
+                if (currentVideoIndex >= videos.length) {
+                  currentVideoIndex = 0;
+                  videoContainer.empty(); // Remove the video element
+                } else {
+                  playNextVideo();
+                }
+              };
+              currentVideo.play();
+            } else {
+              videoContainer.text("No videos found.");
+            }
+
+            videoContainer.fadeIn(0);
+          });
+        }
+
+        function clearTextarea() {
+          document.getElementById("sentence-input").value = "";
+        }
+      });
+    </script>
+
+    <script></script>
+
+    {% include "footer.html" %}
+  </body>
+</html>

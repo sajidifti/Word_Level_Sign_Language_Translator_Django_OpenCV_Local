@@ -1,0 +1,319 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" type="image/png" href="img/fav.png" />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <title>|&nbsp; WLSLT - Word-level Deep Sign Language Recognition</title>
+
+    <script defer src="{% static 'js/script.js' %}"></script>
+  </head>
+  <body>
+    <header class="header">
+      {% include "navbar.html" %}
+
+      <div class="header__title">
+        <h1>
+          Embrace </br>
+          <!-- Green highlight effect -->
+          <span class="highlight">Sign Language</span> 
+          to </br> Connect
+          <span class="">Silent World</span>
+        </h1>
+        <h4>Bridging the gap through the power of signs.</h4>
+        <button class="btn--text btn--scroll-to">Learn more &DownArrow;</button>
+        <img
+          src="{% static 'img/test/hero-1.png' %}"
+          class="header__img"
+          alt="Minimalist bank items"
+        />
+      </div>
+    </header>
+
+    <section class="section" id="section--1">
+      <div class="section__title">
+        <h2 class="section__description">Features</h2>
+        <h3 class="section__header">
+          Comprehensive Tools for Effective Sign Communication and Beyond.
+        </h3>
+      </div>
+
+      <div class="features">
+        <img
+          src="{% static 'images/features/model.png' %}"
+          data-src="{% static 'images/features/model.png' %}"
+          alt="Computer"
+          class="features__img lazy-img"
+        />
+        <div class="features__feature">
+          <div class="features__icon">
+            <svg>
+              <use xlink:href="{% static 'img/icons.svg#icon-monitor' %}"></use>
+            </svg>
+          </div>
+          <h5 class="features__header">Model Variety</h5>
+          <p>
+            Choose from Diverse Models, Each Trained with the Best of Words:
+            100, 300, 1000, or 2000, to Enhance Your Signing Experience.
+          </p>
+        </div>
+
+        <div class="features__feature">
+          <div class="features__icon">
+            <svg>
+              <use
+                xlink:href="{% static 'img/icons.svg#icon-trending-up' %}"
+              ></use>
+            </svg>
+          </div>
+          <h5 class="features__header">Real-time Sign Language Translation</h5>
+          <p>
+            Translate sign language instantly using your camera. Communicate
+            seamlessly with the sign language community.
+          </p>
+        </div>
+        <img
+          src="{% static 'images/features/realtime.png' %}"
+          data-src="{% static 'images/features/realtime.png' %}"
+          alt="Plant"
+          class="features__img lazy-img"
+        />
+
+        <img
+          src="{% static 'images/features/larn.png' %}"
+          data-src="{% static 'images/features/learn.png' %}"
+          alt="Credit card"
+          class="features__img lazy-img"
+        />
+        <div class="features__feature">
+          <div class="features__icon">
+            <svg>
+              <use
+                xlink:href="{% static 'img/icons.svg#icon-credit-card' %}"
+              ></use>
+            </svg>
+          </div>
+          <h5 class="features__header">Learn Sign Language Easily</h5>
+          <p>
+            Now, on our website, you can learn sign language by simply typing a
+            word and hitting "Enter." It will instantly display a video
+            demonstrating the corresponding sign.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="section--2">
+      <div class="section__title">
+        <h2 class="section__description">OPERATIONS</h2>
+        <h3 class="section__header">
+          Keeping It Clear and Simple, Yet Profound.
+        </h3>
+      </div>
+
+      <div class="operations">
+        <div class="operations__tab-container">
+          <button
+            class="btn operations__tab operations__tab--1 operations__tab--active"
+            data-tab="1"
+          >
+            <span>01</span>Open Camera
+          </button>
+          <button class="btn operations__tab operations__tab--2" data-tab="2">
+            <span>02</span>Video Data Transfer
+          </button>
+          <button class="btn operations__tab operations__tab--3" data-tab="3">
+            <span>03</span>Translation & Feedback
+          </button>
+        </div>
+        <div
+          class="operations__content operations__content--1 operations__content--active"
+        >
+          <div class="operations__icon operations__icon--1">
+            <svg>
+              <use xlink:href="{% static 'img/icons.svg#icon-upload' %}"></use>
+            </svg>
+          </div>
+          <h5 class="operations__header">Step 1: Open Camera</h5>
+          <p>
+            Begin by opening your camera to capture your sign language gestures.
+            Our system will continuously analyze the video feed to recognize
+            your signs and facilitate smooth communication.
+          </p>
+        </div>
+
+        <div class="operations__content operations__content--2">
+          <div class="operations__icon operations__icon--2">
+            <svg>
+              <use xlink:href="{% static 'img/icons.svg#icon-home' %}"></use>
+            </svg>
+          </div>
+          <h5 class="operations__header">Step 2: Video Data Transfer</h5>
+          <p>
+            Your camera feed is seamlessly transferred to our server, frame by
+            frame, ensuring every subtle gesture is captured accurately. This
+            real-time data exchange is the first step in our sign language
+            translation process.
+          </p>
+        </div>
+        <div class="operations__content operations__content--3">
+          <div class="operations__icon operations__icon--3">
+            <svg>
+              <use xlink:href="{% static 'img/icons.svg#icon-user-x' %}"></use>
+            </svg>
+          </div>
+          <h5 class="operations__header">Step 3: Translation & Feedback</h5>
+          <p>
+            Our server processes every 40 frames, uses a pre-trained model to
+            recognize sign language with a confidence level above 0.5, and sends
+            the corresponding English text as feedback.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="section--3">
+      <div class="section__title section__title--testimonials">
+        <h2 class="section__description">Meet the Team</h2>
+        <h3 class="section__header">
+          Simplifying Communication Through Sign Language Recognition.
+        </h3>
+      </div>
+
+      <!-- person one -->
+      <div class="slider">
+        <div class="slide">
+          <div class="container">
+            <div class="left-container">
+              <img
+                src="{% static 'images/members/rizvee_sir.jpg' %}"
+                alt="person"
+              />
+            </div>
+            <div class="right-container">
+              <h4 class="role">Supervisor</h4>
+              <h3 class="name">Rizwan Haque Rizvi</h3>
+              <p class="about">
+                Senior Lecturar, East West University, Dhaka, Bangladesh.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- person two -->
+        <div class="slide">
+          <div class="container">
+            <div class="left-container">
+              <img src="{% static 'images/members/ifti.jpg' %}" alt="person" />
+            </div>
+            <div class="right-container">
+              <h4 class="role">Student</h4>
+              <h3 class="name">Md. Sajid Anam Ifti</h3>
+              <h3 class="id">2019-1-60-111</h3>
+              <p class="about">
+                "Hi there! I'm a passionate Computer Science and Engineering (CSE)
+                 student who loves to code, solve problems,
+                  and explore the ever-evolving world of technology.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- person three -->
+        <div class="slide">
+          <div class="container">
+            <div class="left-container">
+              <img
+                src="{% static 'images/members/asif_bhai.png' %}"
+                alt="person"
+              />
+            </div>
+            <div class="right-container">
+              <h4 class="role">Student</h4>
+              <h3 class="name">Md. Asif Sardar</h3>
+              <h3 class="id">2019-1-60-211</h3>
+              <p class="about">
+                I'm excited to be a member of this website and look forward 
+                to connecting with fellow tech enthusiasts, sharing knowledge,
+                 and learning from each other.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- person four -->
+        <div class="slide">
+          <div class="container">
+            <div class="left-container">
+              <img
+                src="{% static 'images/members/sonia_apu.png' %}"
+                alt="person"
+              />
+            </div>
+            <div class="right-container">
+              <h4 class="role">Student</h4>
+              <h3 class="name">Sonia sultana</h3>
+              <h3 class="id">2019-1-60-248</h3>
+              <p class="about">
+                "Hello, I'm a passionate Computer Science and Engineering student with
+                 a curiosity for all things tech. I'm on a journey to explore the vast world of
+                  software development, artificial intelligence, and everything in between.
+                   Join me as I learn, create, and share my experiences 
+                   in the ever-evolving realm of technology. Let's connect, collaborate, and code together!"
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- person five -->
+        <div class="slide">
+          <div class="container">
+            <div class="left-container">
+              <img
+                src="{% static 'images/members/tushar_bhai.png' %}"
+                alt="person"
+              />
+            </div>
+            <div class="right-container">
+              <h4 class="role">Student</h4>
+              <h3 class="name">Azizul Islam Tushar</h3>
+              <h3 class="id">2019-1-60-213</h3>
+              <p class="about">
+                Hello! I am a dedicated and ambitious student currently pursuing a Bachelor's degree in 
+                Computer Science. With a passion for technology and problem-solving, I am eager to explore 
+                the exciting world of programming and software development.
+                My goal is to contribute to innovative solutions that shape the future of technology.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <button class="slider__btn slider__btn--left">&larr;</button>
+        <button class="slider__btn slider__btn--right">&rarr;</button>
+        <div class="dots"></div>
+      </div>
+    </section>
+
+    <section class="section section--sign-up">
+      <div class="section__title">
+        <h3 class="section__header">
+          The best time to embrace Sign Language is now. Start your journey
+          today!
+        </h3>
+      </div>
+      <button class="btn btn--show-modal">
+        Explore Sign Language Recognition
+      </button>
+    </section>
+
+    {% include "footer.html" %}
+  </body>
+</html>

@@ -1,0 +1,26 @@
+{% load static %}
+<nav class="nav">
+  <a href="{% url "home" %}">
+    <img
+      src="{% static 'img/WLSLT-logos_transparent.png' %}"
+      alt="Logo"
+      class="nav__logo"
+      id="logo"
+    />
+  </a>
+
+  <ul class="nav__links">
+    <li class="nav__item">
+      <a class="nav__link" href="{% url 'home' %}#section--1">Features</a>
+    </li>
+    <li class="nav__item">
+      <a class="nav__link" href="{% url 'home' %}#section--2">Operations</a>
+    </li>
+    <li class="nav__item">
+      <a class="nav__link" href="{% url 'home' %}#section--3">Members</a>
+    </li>
+    <li class="nav__item">
+      <a class="nav__link" href="{% url 'sign-to-text' %}">Translator</a>
+    </li>
+  </ul>
+</nav>

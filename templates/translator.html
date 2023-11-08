@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static "css/translator.css" %}" /> <link
+    rel="shortcut icon" type="image/png" href="{% static "img/fav.png" %}" />
+    <script defer src="{% static 'js/translator.js' %}"></script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.7.0.min.js"
+      integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+      crossorigin="anonymous"
+    ></script>
+
+    <title>|&nbsp; WLSLT - Word-level Deep Sign Language Recognition</title>
+  </head>
+  <body>
+    <header class="header">{% include "navbar.html" %}</header>
+    <section class="translator-container">
+      <div class="translator">
+        <div class="left">
+          <img
+            src="{% url 'webcam' %}"
+            width="655px"
+            height="400px"
+            style="border-radius: 10px"
+            class="video_cam"
+            id="initialImg"
+          />
+        </div>
+        <div class="right">
+          <p id="translated_field">Translated....</p>
+        </div>
+      </div>
+      <div class="btns-container">
+        <select name="model" id="modelName" class="selectModel">
+          <option value="model100">[WSASL100]</option>
+          <option value="model300">[WSASL300]</option>
+          <option value="model1000">[WSASL1000]</option>
+          <option value="model2000">[WSASL2000]</option>
+        </select>
+
+        <a href="#" id="changeModel">Change</a>
+
+        <a href="{% url 'text-to-sign' %}">Swap</a>
+        <a href="#" class="iconInfo"> View </a>
+        <a href="#" id="clearButton"> Clear </a>
+      </div>
+      <section class="modelInfo hiddenDisplay">
+        <h2>This model was trained based on this words</h2>
+        <p class="modelWords"></p>
+      </section>
+
+      <div class="overlay hiddenDisplay">
+        <p>x</p>
+      </div>
+    </section>
+
+    {% comment %} Scripts {% endcomment %}
+    <script>
+      $(document).ready(function () {
+        // Get the CSRF token from the cookie
+        function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie !== "") {
+            var cookies = document.cookie.split(";");
+            for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === name + "=") {
+                cookieValue = decodeURIComponent(
+                  cookie.substring(name.length + 1)
+                );
+                break;
+              }
+            }
+          }
+          return cookieValue;
+        }
+
+        // Set the CSRF token header for AJAX requests
+        function setCsrfToken() {
+          var csrftoken = getCookie("csrftoken");
+          $.ajaxSetup({
+            headers: { "X-CSRFToken": csrftoken },
+          });
+        }
+
+        // Function to update the content
+        function updateContent() {
+          $.ajax({
+            url: "{% url 'get-sentence' %}",
+            type: "POST",
+            success: function (response) {
+              var clearedContent = response.content;
+              $("#translated_field").html(clearedContent);
+            },
+          });
+        }
+
+        // Call the update function initially
+        setCsrfToken();
+        updateContent();
+
+        // Set interval to update the content every second (1000 milliseconds)
+        setInterval(function () {
+          setCsrfToken();
+          updateContent();
+        }, 1000);
+
+        // Attach event listener to the clear button
+        $("#clearButton").click(function () {
+          setCsrfToken();
+          $.ajax({
+            url: "{% url 'clear-sentence' %}",
+            type: "POST",
+            success: function (response) {
+              var clearedContent = response.content;
+              $("#translated_field").html(clearedContent);
+            },
+          });
+        });
+      });
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        // Function to handle the button click
+        function handleButtonClick() {
+          // Store the initial src attribute
+          var initialSrc = $("#initialImg").attr("src");
+
+          // Remove the src attribute
+          $("#initialImg").removeAttr("src");
+
+          // var selectedOption = $(this).val();
+          var selectedOption = document.getElementById("modelName").value;
+          console.log("Selected Option Is:");
+          console.log(selectedOption);
+          // var url = "{% url 'set-model' model=0 %}".replace("0", selectedOption);
+
+          $.ajax({
+            //url: url,
+            url: "{% url 'set-model' model=0 %}".replace("0", selectedOption),
+            type: "GET",
+            success: function (response) {
+              // Handle the response from the Django view
+              console.log(response);
+
+              // Add the initial src attribute back after the AJAX request is completed
+              $("#initialImg").attr("src", initialSrc);
+            },
+            error: function (error) {
+              console.log(error);
+
+              // Add the initial src attribute back in case of an error
+              $("#initialImg").attr("src", initialSrc);
+            },
+          });
+        }
+
+        // Attach the button click event listener
+        $("#changeModel").click(handleButtonClick);
+      });
+    </script>
+
+    {% include "footer.html" %}
+  </body>
+</html>
